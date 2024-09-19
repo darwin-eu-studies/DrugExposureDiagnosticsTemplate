@@ -32,5 +32,5 @@ Edit the variables in the codeToRun.R script below to the correct values for you
 
 -   Install and configure Execution Engine <https://darwin-eu-dev.github.io/execution-engine/install.html>
 -   Download the code from Github as a zip file.
--   Rename the zip file to match the folder name in the execution-config.yml file, {Study ID}-CohortDiagnostics
+-   Rename the zip file to match the folder name in the execution-config.yml file, {Study ID}-DrugExposureDiagnostics
 -   Upload the zip file to ExecutionEngine and click submit
