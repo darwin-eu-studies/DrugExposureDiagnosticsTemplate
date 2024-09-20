@@ -4,13 +4,13 @@
 
 2.  Replace DrugExposureDiagnostics with {Study ID}-DrugExposureDiagnostics in three places (require for execution engine)
 
-    1.  The name of the folder/repository should be {Study ID}-DrugExposureDiagnostics instead of DrugExposureDiagnostics
+    i.  The name of the folder/repository should be {Study ID}-DrugExposureDiagnostics instead of DrugExposureDiagnostics
 
-    2.  Replace DrugExposureDiagnostics with {Study ID}-DrugExposureDiagnostics in the execution-config.yml file both in the studyId and entrypoint fields. Also replace the StudyTitle field with a descriptive name.
+    ii.  If you are using the Darwin Execution Engine then replace DrugExposureDiagnostics with {Study ID}-DrugExposureDiagnostics in the execution-config.yml file both in the studyId and entrypoint fields. Also replace the StudyTitle field with a descriptive name.
 
-    3.  Rename or recreate the .Rproj file in this repo so that it is also {Study ID}-DrugExposureDiagnostics
+    iii.  Rename or recreate the .Rproj file in this repo so that it is also {Study ID}-DrugExposureDiagnostics
 
-4.  Commit your changes and push the updated files to github
+3.  Commit your changes and push the updated files to github
 
 # Running the code in RStudio
 `
@@ -34,3 +34,7 @@ Edit the variables in the codeToRun.R script below to the correct values for you
 -   Download the code from Github as a zip file.
 -   Rename the zip file to match the folder name in the execution-config.yml file, {Study ID}-DrugExposureDiagnostics
 -   Upload the zip file to ExecutionEngine and click submit
+
+# Note on Docker images
+
+This template can be used with Arachne (in Docker mode) or with the Darwin execution engine. Both pull docker images and run the R code inside them. The docker image used for this template is created from the dockerfile [here](https://github.com/darwin-eu/execution-engine/blob/da1679f3c653d21e4becc83087dc04d97f91bf55/execution-engine-runtime/DockerImages/darwin-base/Dockerfile#L1). It is maintained by the darwin project. The dockerfile in this reposity adds a specific set of R packages based on the renv lock file to the darwin base docker image.

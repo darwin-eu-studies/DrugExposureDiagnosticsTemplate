@@ -1,0 +1,4 @@
+studyId: "DrugExposureDiagnosticsTemplate"
+studyTitle: "Run Drug Exposure Diagnostics"
+engine: "executionengine.azurecr.io/darwin-drug-diagnostics:v0.1"
+entrypoint: "DrugExposureDiagnosticsTemplate/CodeToRun-DarwinExecutionEngine.R"
