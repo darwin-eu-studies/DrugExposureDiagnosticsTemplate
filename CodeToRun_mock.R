@@ -42,10 +42,7 @@ if (!file.exists(outputDir)) {
 
 source(here::here("runDrugExposureDiagnostics.R"))
 
-# Review and return the csv files in the output folder
-
 # To view the shiny app run the following code
-
 DrugExposureDiagnostics::viewResults(dataFolder = outputDir)
 
 
