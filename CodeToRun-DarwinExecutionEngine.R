@@ -33,14 +33,19 @@ ingredients <- c(1125315)
 # connection setup
 if (dbms == 'postgresql') {
   con <- DBI::dbConnect(RPostgres::Postgres(),
-                        dbname = dbname,
                         host = server,
+                        dbname = dbname,
                         user = user,
                         password = password,
                         bigint = "integer")
 } else {
-  # TODO
-  con <- DatabaseConnector::connect(connectionDetails)
+  con <- DBI::dbConnect(DatabaseConnectorDriver(),
+                        dbms = dbms,
+                        host = server,
+                        dbname = dbname,
+                        user = user,
+                        password = password,
+                        bigint = "integer")
 }
 
 # set the minimum counts: results with counts below this value will be obscured
