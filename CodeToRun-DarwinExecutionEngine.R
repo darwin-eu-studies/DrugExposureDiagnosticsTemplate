@@ -19,40 +19,42 @@ if (port == "") port <- NULL
 cdmVersion <- Sys.getenv("CDM_VERSION")
 catalog <- Sys.getenv("DBMS_CATALOG")
 cdmDatabaseSchema <- Sys.getenv("CDM_SCHEMA")
-cohortDatabaseSchema <- Sys.getenv("RESULT_SCHEMA")
+writeDatabaseSchema <- Sys.getenv("RESULT_SCHEMA")
 
 if (nchar(catalog) >= 1) {
   cdmDatabaseSchema <- paste(catalog, cdmDatabaseSchema, sep = ".")
-  cohortDatabaseSchema <- paste(catalog, cohortDatabaseSchema, sep = ".")
+  writeDatabaseSchema <- paste(catalog, writeDatabaseSchema, sep = ".")
 }
 
-# The databaseId is a short (<= 20 characters)
-databaseId <- "YOUR_DATABASE_ID"
-
 # fill in the ingredient concept ids
-ingredients <- c()
+# TODO this should not be harcoded, but be picked up from a place where a user can put it
+ingredients <- c(1125315)
 
-# setup your connection
-con <- DBI::dbConnect()
-
-# The database schema where the observational data in CDM is located
-cdmDatabaseSchema <- ""
-
-# The database schema where tables can be instantiated
-writeDatabaseSchema <- ""
+# connection setup
+if (dbms == 'postgresql') {
+  con <- DBI::dbConnect(RPostgres::Postgres(),
+                        dbname = dbname,
+                        host = server,
+                        user = user,
+                        password = password,
+                        bigint = "integer")
+} else {
+  # TODO
+  con <- DatabaseConnector::connect(connectionDetails)
+}
 
 # set the minimum counts: results with counts below this value will be obscured
 minCellCount <- 5
 
 cdm <- CDMConnector::cdm_from_con(con,
                                   cdm_schema = cdmDatabaseSchema,
-                                  write_schema = writeDatabaseSchema)
+                                  write_schema = writeDatabaseSchema,
+                                  .soft_validation = TRUE)
 nPersons <- cdm$person %>%
   dplyr::tally() %>%
   dplyr::pull(n)
 
 print(paste(nPersons, "persons in the cdm database"))
-DatabaseConnector::disconnect(connection)
 
 # setup output folder
 outputDir <- "/results"
