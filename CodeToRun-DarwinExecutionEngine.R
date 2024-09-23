@@ -1,6 +1,9 @@
 # This script is used as the entry point when using the Darwin Execution Engine
 print(paste("working directory:", getwd()))
 
+# Read properties file
+props <- read.properties("run.properties")
+
 # get parameters and create connection details ----
 # These environment variables are pass in by the Darwin Execution Engine
 dbms   <- Sys.getenv("DBMS_TYPE")
@@ -27,8 +30,7 @@ if (nchar(catalog) >= 1) {
 }
 
 # fill in the ingredient concept ids
-# TODO this should not be harcoded, but be picked up from a place where a user can put it
-ingredients <- c(1125315)
+ingredients <- as.numeric(unlist(strsplit(props$ingredients, ",")))
 
 # connection setup
 if (dbms == 'postgresql') {

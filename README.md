@@ -2,7 +2,9 @@
 
 1.  Create a new repo from this template on Github and clone it locally
 
-2.  Replace DrugExposureDiagnostics with {Study ID}-DrugExposureDiagnostics in three places (require for execution engine)
+2.  Enter the ingredient(s) for which you want to run DED in run.properties
+
+3.  Replace DrugExposureDiagnostics with {Study ID}-DrugExposureDiagnostics in three places (require for execution engine)
 
     i.  The name of the folder/repository should be {Study ID}-DrugExposureDiagnostics instead of DrugExposureDiagnostics
 
@@ -10,7 +12,7 @@
 
     iii.  Rename or recreate the .Rproj file in this repo so that it is also {Study ID}-DrugExposureDiagnostics
 
-3.  Commit your changes and push the updated files to github
+4.  Commit your changes and push the updated files to github
 
 # Running the code in RStudio
 `
