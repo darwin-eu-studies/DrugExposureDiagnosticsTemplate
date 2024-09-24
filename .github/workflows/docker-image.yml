@@ -1,0 +1,30 @@
+name: Build Docker Image
+on:
+  push:
+    branches:
+      - main
+jobs:
+    build:
+      name: push docker image to docker hub
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: login
+          id: azurecr
+          env:
+            username: ${{secrets.AZURE_USER}}
+            password: ${{secrets.AZURE_PWD}}
+          run: |
+            docker login -u $username -p $password executionengine.azurecr.io
+        - name: build the docker image
+          id: build-docker-image
+          run: |
+            ls -la 
+            docker build . -f Dockerfile -t ginberg/darwin-drug-diagnostics:latest
+        - name: tag the docker image
+          id: tag-docker-image
+          run: |
+            docker tag ginberg/darwin-drug-diagnostics:latest executionengine.azurecr.io/darwin-drug-diagnostics:latest
+        - name: push the docker image
+          id: push-docker-image
+          run: docker push executionengine.azurecr.io/darwin-drug-diagnostics:latest
