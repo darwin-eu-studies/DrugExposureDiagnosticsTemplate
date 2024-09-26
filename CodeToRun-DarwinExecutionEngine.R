@@ -45,27 +45,8 @@ if (nchar(catalog) >= 1) {
 }
 
 # connection setup
-if (dbms == 'postgresql') {
-  con <- DBI::dbConnect(RPostgres::Postgres(),
-                        host = server,
-                        dbname = dbname,
-                        user = user,
-                        password = password,
-                        bigint = "integer")
-} else {
-  con <- DBI::dbConnect(DatabaseConnectorDriver(),
-                        dbms = dbms,
-                        host = server,
-                        dbname = dbname,
-                        user = user,
-                        password = password,
-                        bigint = "integer")
-}
+cdm <- CDMConnector::cdm_from_environment()
 
-cdm <- CDMConnector::cdm_from_con(con,
-                                  cdm_schema = cdmDatabaseSchema,
-                                  write_schema = writeDatabaseSchema,
-                                  .soft_validation = TRUE)
 nPersons <- cdm$person %>%
   dplyr::tally() %>%
   dplyr::pull(n)
