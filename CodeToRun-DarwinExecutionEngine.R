@@ -24,25 +24,7 @@ print(paste("working directory:", getwd()))
 dbms   <- Sys.getenv("DBMS_TYPE")
 checkmate::assertChoice(dbms, choices = c("postgresql", "redshift", "sql server", "snowflake", "spark"))
 
-connectionString <- Sys.getenv("CONNECTION_STRING")
-user   <- Sys.getenv("DBMS_USERNAME")
-password <- Sys.getenv("DBMS_PASSWORD")
-server <- Sys.getenv("DBMS_SERVER")
-dbname <- Sys.getenv("DBMS_NAME")
-port <- Sys.getenv("DBMS_PORT")
 databaseId <- Sys.getenv("DATA_SOURCE_NAME")
-
-if (port == "") port <- NULL
-
-cdmVersion <- Sys.getenv("CDM_VERSION")
-catalog <- Sys.getenv("DBMS_CATALOG")
-cdmDatabaseSchema <- Sys.getenv("CDM_SCHEMA")
-writeDatabaseSchema <- Sys.getenv("RESULT_SCHEMA")
-
-if (nchar(catalog) >= 1) {
-  cdmDatabaseSchema <- paste(catalog, cdmDatabaseSchema, sep = ".")
-  writeDatabaseSchema <- paste(catalog, writeDatabaseSchema, sep = ".")
-}
 
 # connection setup
 cdm <- CDMConnector::cdm_from_environment()
