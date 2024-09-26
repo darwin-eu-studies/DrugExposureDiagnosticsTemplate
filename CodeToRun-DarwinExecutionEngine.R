@@ -1,8 +1,23 @@
+library(DrugExposureDiagnostics)
+library(dplyr)
+
+## START SETTINGS
+# vector of ingredients
+ingredientConceptIds <- c(1125315)
+# an ingredient can have multiple drug concepts, here you can limit to the drug concepts that you want.
+# If NULL, all of them will be taken into account
+conceptIds <- NULL
+# the checks to be run
+checks <- c("missing", "exposureDuration", "type", "route", "sourceConcept", "daysSupply",
+            "verbatimEndDate", "dose", "sig", "quantity", "diagnosticsSummary")
+# if the output should also be calculated per concept
+byConcept <- TRUE
+# set the minimum counts: results with counts below this value will be obscured
+minCellCount <- 5
+## END Settings
+
 # This script is used as the entry point when using the Darwin Execution Engine
 print(paste("working directory:", getwd()))
-
-# Read properties file
-props <- read.properties("run.properties")
 
 # get parameters and create connection details ----
 # These environment variables are pass in by the Darwin Execution Engine
@@ -29,9 +44,6 @@ if (nchar(catalog) >= 1) {
   writeDatabaseSchema <- paste(catalog, writeDatabaseSchema, sep = ".")
 }
 
-# fill in the ingredient concept ids
-ingredients <- as.numeric(unlist(strsplit(props$ingredients, ",")))
-
 # connection setup
 if (dbms == 'postgresql') {
   con <- DBI::dbConnect(RPostgres::Postgres(),
@@ -49,9 +61,6 @@ if (dbms == 'postgresql') {
                         password = password,
                         bigint = "integer")
 }
-
-# set the minimum counts: results with counts below this value will be obscured
-minCellCount <- 5
 
 cdm <- CDMConnector::cdm_from_con(con,
                                   cdm_schema = cdmDatabaseSchema,

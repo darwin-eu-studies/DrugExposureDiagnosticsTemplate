@@ -2,7 +2,7 @@
 
 1.  Create a new repo from this template on Github and clone it locally
 
-2.  Enter the ingredient(s) for which you want to run DED in run.properties
+2.  Fill in the settings in CodeToRun-DarwinExecutionEngine.R at the top
 
 3.  Replace DrugExposureDiagnostics with {Study ID}-DrugExposureDiagnostics in three places (require for execution engine)
 

@@ -14,14 +14,23 @@ library(CohortCharacteristics)
 
 # 2. Edit the variables below to create a connection and run DrugExposureDiagnostics
 
-# The databaseId is a short (<= 20 characters)
-databaseId <- "mock"
-
-# fill in the ingredient concept ids
-ingredients <- c(1125315)
-
+## START SETTINGS
+# vector of ingredients
+ingredientConceptIds <- c(1125315)
+# an ingredient can have multiple drug concepts, here you can limit to the drug concepts that you want.
+# If NULL, all of them will be taken into account
+conceptIds <- NULL
+# the checks to be run
+checks <- c("missing", "exposureDuration", "type", "route", "sourceConcept", "daysSupply",
+            "verbatimEndDate", "dose", "sig", "quantity", "diagnosticsSummary")
+# if the output should also be calculated per concept
+byConcept <- TRUE
 # set the minimum counts: results with counts below this value will be obscured
 minCellCount <- 5
+## END Settings
+
+# The databaseId is a short (<= 20 characters)
+databaseId <- "mock"
 
 cdm <- DrugExposureDiagnostics:::mockDrugExposure()
 
@@ -44,5 +53,3 @@ source(here::here("runDrugExposureDiagnostics.R"))
 
 # To view the shiny app run the following code
 DrugExposureDiagnostics::viewResults(dataFolder = outputDir)
-
-
